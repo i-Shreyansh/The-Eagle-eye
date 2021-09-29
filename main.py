@@ -1,9 +1,7 @@
 import cv2
 
 
-img="C:/Users/shrey/OneDrive/Pictures/pic.jpeg"
-vid="C:/Users/shrey/OneDrive/Pictures/Camera Roll/WIN_20210903_22_56_48_Pro.mp4"
-
+#enter check 0 t0 5 for ur webcam
 a=cv2.VideoCapture(5)
 
 
