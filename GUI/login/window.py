@@ -1,17 +1,6 @@
 
 
 
-# importing sys
-import os
-  
-# adding Folder_2 to the system path
-
-os.chdir(r"C\Desktop\The-Eagle_eye\openCV")
-
-import Device as dev
-dev.Cam(5)
-
-
 from tkinter import *
 
 
@@ -21,6 +10,8 @@ window.title("Login Page")
 def btn_clicked():
     print(entry0.get())
     print(entry1.get())
+    window.destroy()
+    
     
 window.geometry("839x500")
 window.configure(bg = "#ffffff")
@@ -79,6 +70,7 @@ entry1_bg = canvas.create_image(
     image = entry1_img)
 
 entry1 = Entry(
+    show="*",
     bd = 0,
     bg = "#a7d4ff",
     highlightthickness = 0)
