@@ -16,6 +16,7 @@ def webam(cam=0):
         print(np.array(img).shape)
         
         cv2.imshow("video",img)
+        
         if cv2.waitKey(20 ) & 0xFF == ord("q"):
             break
 
