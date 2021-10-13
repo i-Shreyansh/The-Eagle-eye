@@ -4,7 +4,7 @@ import numpy as np
 
 
 
-def webam(cam=0):
+def webcam(cam=0):
     a=cv2.VideoCapture(cam)
     
     width= a.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -21,4 +21,3 @@ def webam(cam=0):
             break
 
 
-webam(5)

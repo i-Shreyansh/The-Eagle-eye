@@ -1,18 +1,21 @@
 from tkinter import *
 import os
 
-
-PATH = os.getcwd()
-PATH=PATH.split("\GUI")[0]
-os.chdir(PATH)
-import Device as dv
-dv.webcam(5)
-
 def btn_clicked0():
     print("Button Clicked0")
+    PATH = os.getcwd()
+    PATH=PATH.split("\GUI")[0]
+    os.chdir(PATH)
+    import Device as dv
+
+
+
+    dv.webcam(5)
+
     
 def btn_clicked1():
     print("Button Clicked1")
+    
     window.destroy()
 
 window = Tk()
