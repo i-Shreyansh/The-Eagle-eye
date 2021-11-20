@@ -1,24 +1,22 @@
 
 import cv2
+from tkinter import *
 import numpy as np
+from PIL import Image, ImageTk
 
 
 
-def webam(cam=0):
-    a=cv2.VideoCapture(cam)
+def webcam(cam=0):
+    cap=cv2.VideoCapture(cam)
     
-    width= a.get(cv2.CAP_PROP_FRAME_WIDTH)
-    height= a.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    print(height,width)
-    while True:
-        sucess,img =a.read()
-        cv2.flip(img,-1)
-        print(np.array(img).shape)
-        
-        cv2.imshow("video",img)
-        
-        if cv2.waitKey(20 ) & 0xFF == ord("q"):
-            break
 
+    img=cap.read()[1]
+    cv2.flip(img,-1)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    arr= Image.fromarray(img)
+    if cv2.waitKey(20 ) & 0xFF == ord("q"):
+        break
 
-webam(5)
+        
+
+webcam()

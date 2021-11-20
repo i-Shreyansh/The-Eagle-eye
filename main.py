@@ -3,12 +3,11 @@ import os
 
 
 PATH = os.getcwd()
-os.chdir(PATH+"\GUI\login")
+os.chdir(PATH+"\GUI\LOGIN")
+path=os.getcwd()
+os.system('python window.py')
 
-import window
+os.chdir(PATH+"\GUI\HOME_PAGE")
 
-os.chdir(PATH+"\GUI\Home")
-
-import window2
-
+os.system('python window2.py')
 
