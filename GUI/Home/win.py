@@ -4,8 +4,6 @@ import cv2
 from PIL import Image
 from PIL import ImageTk as imgtk
 
-btn2=False
-
 
 def btn_clicked0():
     print("Button Clicked0")
@@ -14,11 +12,11 @@ def btn_clicked0():
     os.chdir(PATH)
     import Device as dv
 
-    dv.webcam()
 
     
 def btn_clicked1():
     print("Button Clicked1")
+    
     window.destroy()
 
 window = Tk()   
