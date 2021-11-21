@@ -56,9 +56,9 @@ def start(device=0):
     cap.release()
     cv2.destroyAllWindows()
 
+
+
 start()
-
-
 
 
 

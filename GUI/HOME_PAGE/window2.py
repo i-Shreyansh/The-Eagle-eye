@@ -5,6 +5,13 @@ import cv2
 from PIL import Image
 from PIL import ImageTk as imgtk
 
+from keras.models import load_model
+from time import sleep
+from keras.preprocessing.image import img_to_array
+from keras.preprocessing import image
+import cv2
+import numpy as np
+
 
 def btn0_clicked():
     print("Button0 Clicked")
@@ -13,22 +20,57 @@ def btn1_clicked():
     PATH = os.getcwd()
     PATH=PATH.split("\GUI")[0]
     os.chdir(PATH+"\Expression_detector")
-    import test
+
     global cap
-    cap=cv2.VideoCapture(0)
+
+    device=0
+    face_classifier = cv2.CascadeClassifier('./Face_Classifier.xml')
+    classifier =load_model('./Emotion_Detection.h5')
+    
+    class_labels = ['Angry','Happy','Neutral','Sad','Surprise']
+    
+    cap = cv2.VideoCapture(device)
     
     
     l1=Label(frame)
     l1.pack()
+    while True:
+        # Grab a single frame of video
+        ret, f = cap.read()
+        
+        labels = []
+        gray = cv2.cvtColor(f,cv2.COLOR_BGR2GRAY)
+        faces = face_classifier.detectMultiScale(gray,1.3,5)
     
-    while (True):
-        img=cap.read()[1]
+        for (x,y,w,h) in faces:
+            cv2.rectangle(f,(x,y),(x+w,y+h),(255,0,0),2)
+            roi_gray = gray[y:y+h,x:x+w]
+            roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
+    
+    
+            if np.sum([roi_gray])!=0:
+                roi = roi_gray.astype('float')/255.0
+                roi = img_to_array(roi)
+                roi = np.expand_dims(roi,axis=0)
+    
+            # make a prediction on the ROI, then lookup the class
+    
+                preds = classifier.predict(roi)[0]
+                
+                label=class_labels[preds.argmax()]
+                
+                label_position = (x,y)
+                cv2.putText(f,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
+            else:
+                cv2.putText(f,'No Face Found',(20,60),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
+            
+        img=f
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img= Image.fromarray(img)
         img= imgtk.PhotoImage(img)
         l1['image']=img
-    
         window.update()
+
 def btn2_clicked():
     print("Button2 Clicked")
     cap.release()
@@ -40,22 +82,32 @@ def btn3_clicked():
     
     os.chdir(PATH+"\Expression_detector")
     print(os.getcwd())
-    import test 
-
+    
+    
+    
+    l1=Label(frame)
+    l1.pack()
+    
+    
+    
 
 def btn4_clicked():
     print("Button4 Clicked")
 def btn5_clicked():
     print("Button5 Clicked")
 def btn6_clicked():
+
     print("Button6 Clicked")
+    
 def btn7_clicked(): #exit
     print("Button7 Clicked")
+  
     os._exit(0)
 
 
 
 window = Tk()
+
 
 window.geometry("1000x711")
 window.configure(bg = "#0b07ec")
@@ -200,7 +252,8 @@ canvas.create_text(
     text = "Welcome to Eagle Eye",
     fill = "#000000",
     font = ("Aclonica-Regular", int(20.0)))
-frame=Frame(window, bg="green")
+
+frame=Frame(window)
 frame.pack()
 frame.place(x=327,y=125, height=483, width=665)
 """
